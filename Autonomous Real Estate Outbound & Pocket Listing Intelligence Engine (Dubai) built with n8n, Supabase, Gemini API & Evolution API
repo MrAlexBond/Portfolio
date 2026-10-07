@@ -1,0 +1,71 @@
+# CASE STUDY: Autonomous Real Estate Outbound & Pocket Listing Intelligence Engine (Dubai)
+
+> **Architect & Engineer:** Aleksandr Krupenko  
+> **Domain:** Dubai Secondary Real Estate / PropTech / GTM & Sales Operations Automation  
+> **Engineering Standard:** C.R.E.S.T. Framework (Critical Analysis, Resilience, Ergonomics, Security, Throughput)  
+> **Infrastructure Cost:** **$6/month Total** (Single 1 GB RAM VPS), $0/mo in SaaS and paid messaging APIs
+
+---
+
+## 1. Executive Summary & Core Broker Pain Point
+
+In the competitive Dubai secondary real estate market, particularly for individual brokers and agents building their property pipeline, the single biggest bottleneck is **cold calling property owner databases**. 
+
+* **The Problem:** Manual cold calling requires dozens of hours weekly, suffers from extremely low connection rates, high burn-out, and slow coverage.
+* **The Solution:** An autonomous, event-driven engine designed to fully replace manual cold calling. The system validates contact databases, dispatches personalized initial outreach via WhatsApp, qualifies inbound responses using LLM-driven NLU, and automatically feeds confirmed properties into a live **Pocket Listing**.
+* **Pocket Listing Strategy (Agent-to-Agent Revenue):** Instead of noisy chat alerts, high-intent leads are written directly to a structured Google Sheet (Pocket Listing). This live portfolio is shared with co-brokering networks—matching private property inventory directly with buyers' agents to drastically increase transaction velocity.
+
+---
+
+## 2. System Architecture & Infrastructure
+[ Supabase PostgreSQL ] ──(DB Query)──> [ Outbound Dispatcher ] ──(Evolution API)──> [ WhatsApp Network ]
+▲                                                                                 │
+│                                                                           (Inbound Msg)
+│                                                                                 ▼
+[ Performance Analytics ] <──(SQL)── [ System Error Catcher ] <── [ Inbound NLU Engine ] <── [ Webhook ]
+│                                                            │
+(Telegram Bot)                                              (Gemini AI NLU)
+│
+(Confirmed Leads)
+▼
+[ Live Pocket Listing ]
+(Google Sheets / B2B)
+* **Orchestration Engine:** Self-hosted **n8n** deployed in Docker on a $6/mo VPS (1 GB RAM).
+* **Database & CRM Layer:** **Supabase (PostgreSQL)** — centralized relational storage for lead contacts, outreach statuses, dialogue context, and interaction logs.
+* **AI NLU Engine:** **Google Gemini API (Free Tier)** — context-aware Natural Language Understanding for real-time intent classification of owner replies.
+* **Communication Gateway:** **Evolution API** in Docker on VPS, delivering human-like delivery delays and automated WhatsApp session handling.
+* **Reporting & Observability:** **Telegram Bot API** for operational errors/logs, plus a dedicated **SQL Performance Tracking Workflow** calculating outreach efficiency.
+
+---
+
+## 3. Key Workflows Breakdown & Functional Design
+
+### 1. Database Validation (`WA Number Validation`)
+Before any outreach campaign runs, contacts pass through an automated validation loop (`Loop Over Items` with a 7-second rate-limit buffer)[cite: 3]. Non-WhatsApp numbers are tagged and filtered out in Supabase prior to sequence dispatch to prevent API waste and reduce anti-spam triggers[cite: 3].
+
+### 2. Autonomous Outbound Dispatcher (`Outbound Workflow`)
+Replaces manual phone calls[cite: 4]. Scheduled cron triggers pull queued leads from Supabase, verify active business hours (Dubai GST time), format personalized messages with dynamic property details, and route them through Evolution API[cite: 4].
+
+### 3. Inbound NLU & Pocket Listing Pipeline (`Inbound Workflow`)
+Incoming WhatsApp replies hit a dedicated Webhook and are instantly processed by Gemini API[cite: 5]:
+* **Direct Agent Interaction:** Since incoming WhatsApp messages appear directly on the broker's phone, duplicate Telegram lead alerts were intentionally omitted to prevent notification fatigue.
+* **Pocket Listing Automation:** When a property owner confirms interest (`INTERESTED`), the system updates PostgreSQL and automatically writes the validated property parameters to a master **Google Sheet**[cite: 5]. This sheet acts as a real-time **Pocket Listing**, immediately ready for B2B sharing with co-brokerage agents who have active buyers.
+* **Auto-Opt-Out:** Negative responses (`REJECTED`) or competitor replies (`AGENT`) automatically flag the record in PostgreSQL to halt further communication[cite: 5].
+
+### 4. End-to-End Performance Analytics (`Analytics - Weekly Performance Report` / `Market Analytics Catcher`)
+A dedicated monitoring workflow queries PostgreSQL to evaluate system health and campaign performance[cite: 2]:
+* Tracks total numbers processed vs. active WhatsApp delivery rate[cite: 2].
+* Measures exact conversion percentages: Outreach Volume $\rightarrow$ Delivery $\rightarrow$ Positive Owner Replies (`INTERESTED`) vs. Opt-outs (`REJECTED`)[cite: 2].
+* Provides data-backed insights to continuously optimize message copy, timing, and database targeting[cite: 2].
+
+### 5. Centralized Error Catcher (`System - Global Error Handler`)
+A global exception workflow monitoring all 6 micro-services[cite: 2]. Network drops or API timeouts automatically trigger a rich diagnostic alert (`Workflow Name`, `Node Name`, `Error Message`, `Execution ID`) sent directly to an internal Telegram ops chat for immediate troubleshooting[cite: 2].
+
+---
+
+## 4. Engineering Impact & Business Results
+
+* **100% Elimination of Manual Cold Calls:** Replaced hundreds of hours of manual prospecting with a continuous, automated outreach engine.
+* **Faster Co-Brokering Monetization:** Automated creation of live Pocket Listings enabled immediate Agent-to-Agent deal sourcing, increasing inventory turnover.
+* **$6/mo Operational Overhead:** Replaced traditional $300+/mo SaaS platforms (HubSpot, Make.com, paid WhatsApp APIs) with a single, lean $6 VPS setup.
+* **Instant Response Handling:** Inbound qualification and Pocket Listing updates complete in **under 3 seconds** from owner reply.
