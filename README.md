@@ -25,8 +25,6 @@ All my automation systems are engineered using my proprietary **C.R.E.S.T.** met
 
 ---
 
-### 🚀 Featured Automation Projects
-
 ### 📫 Connect with Me
 - **LinkedIn:** [Aleksandr Krupenko](https://linkedin.com/in/aleksandr-krupenko)
 - **Notion Portfolio:** [GTM & Automation Showcase](https://app.notion.com/p/3cee3b0ea72780329e72dafc9ac8a620)
