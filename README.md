@@ -27,19 +27,6 @@ All my automation systems are engineered using my proprietary **C.R.E.S.T.** met
 
 ### 🚀 Featured Automation Projects
 
-#### 1. [b2b-omnichannel-outbound-engine](./b2b-omnichannel-outbound-engine)
-> Production-grade n8n workflow for automated agency decision-maker outreach, data enrichment via Gemini API, and smart scheduling via MS Graph & WhatsApp API.
-> **Impact:** +40% confirmed B2B meetings, AED 1.5M sales volume pipeline generated.
-
-#### 2. [broker-content-distribution-bot](./broker-content-distribution-bot)
-> High-throughput distribution pipeline broadcasting inventory updates & price lists across 568+ agency channels.
-> **Impact:** Reduced release broadcast time from 30 minutes to under 4 minutes across 4,000+ real estate brokers.
-
-#### 3. [fitfuel-ai-nutrition-engine](./fitfuel-ai-nutrition-engine) *(Optional / Side Project)*
-> AI-driven meal parsing and macro-tracking backend using Google Gemini Vision API and Supabase/PostgreSQL.
-
----
-
 ### 📫 Connect with Me
 - **LinkedIn:** [Aleksandr Krupenko](https://linkedin.com/in/aleksandr-krupenko)
 - **Notion Portfolio:** [GTM & Automation Showcase](https://app.notion.com/p/3cee3b0ea72780329e72dafc9ac8a620)
