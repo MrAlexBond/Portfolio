@@ -12,7 +12,7 @@
 In the competitive Dubai secondary real estate market, particularly for individual brokers and agents building their property pipeline, the single biggest bottleneck is **cold calling property owner databases**. 
 
 * **The Problem:** Manual cold calling requires dozens of hours weekly, suffers from extremely low connection rates, high burn-out, and slow coverage.
-* **The Solution:** An autonomous, event-driven engine designed to fully replace manual cold calling. The system validates contact databases, dispatches personalized initial outreach via WhatsApp, qualifies inbound responses using LLM-driven NLU, and automatically feeds confirmed properties into a live **Pocket Listing**.
+* **The Solution:** An autonomous, event-driven engine designed to automate owner outreach and initial lead qualification. The system validates contact databases, dispatches personalized initial outreach via WhatsApp, qualifies inbound responses using LLM-driven NLU, and automatically feeds confirmed properties into a live **Pocket Listing**.
 * **Pocket Listing Strategy (Agent-to-Agent Revenue):** Instead of noisy chat alerts, high-intent leads are written directly to a structured Google Sheet (Pocket Listing). This live portfolio is shared with co-brokering networks—matching private property inventory directly with buyers' agents to drastically increase transaction velocity.
 
 ---
